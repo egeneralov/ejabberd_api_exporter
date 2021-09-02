@@ -1,7 +1,7 @@
 on:
   push:
     tags:
-    - 'v*'
+      - 'v*'
 
 name: Release
 
@@ -10,16 +10,16 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      
+
       - name: Set up Go 1.15.6
         uses: actions/setup-go@v1
         with:
           go-version: 1.15.6
         id: go
-      
+
       - name: Checkout code
         uses: actions/checkout@master
-      
+
       - name: build linux
         run: GOOS=linux go build -a -v -installsuffix cgo -ldflags="-w -s" -o ejabberd_api_exporter-linux cmd/ejabberd_api_exporter/*.go
 
@@ -65,7 +65,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      
+
       - name: save linux artifact in Actions
         uses: actions/upload-artifact@v1.0.0
         with:

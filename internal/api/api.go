@@ -12,19 +12,15 @@ import (
 
 type Api struct {
 	client   *http.Client
-	login    string
-	password string
 	vhost    string
 	endpoint string
 }
 
-func New(login, password, vhost, endpoint string) *Api {
+func New(vhost, endpoint string) *Api {
 	return &Api{
 		client: &http.Client{
 			Transport: &http.Transport{
 				TLSClientConfig: &tls.Config{
-					//RootCAs:            &x509.CertPool{},
-					//ClientCAs:          &x509.CertPool{},
 					InsecureSkipVerify: true,
 				},
 				TLSHandshakeTimeout: time.Second * 3,
@@ -37,8 +33,6 @@ func New(login, password, vhost, endpoint string) *Api {
 			},
 			Timeout: time.Second * 10,
 		},
-		login:    login,
-		password: password,
 		vhost:    vhost,
 		endpoint: endpoint,
 	}

@@ -10,8 +10,6 @@ import (
 )
 
 var (
-	login     = flag.String("login", "egeneralov@ejabberd", "username")
-	password  = flag.String("password", "egeneralov", "password")
 	vhost     = flag.String("vhost", "ejabberd", "virtual host to use")
 	endpoint  = flag.String("endpoint", "https://ejabberd:5443", "endpoint to go")
 	bind      = flag.String("bind", "0.0.0.0:8080", "bind to")
@@ -22,8 +20,6 @@ func main() {
 	flag.Parse()
 	prometheus.MustRegister(collector.New(
 		api.New(
-			*login,
-			*password,
 			*vhost,
 			*endpoint,
 		),
