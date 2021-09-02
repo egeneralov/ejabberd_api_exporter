@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  glauth:
+    image: glauth/glauth:v1.1.2
+    volumes:
+      - ./glauth.conf:/app/config/config.cfg
+  ejabberd:
+    image: ejabberd/ecs:20.12
+    volumes:
+      - ./ejabberd.yml:/home/ejabberd/conf/ejabberd.yml
+      - ./ca.cer:/home/ejabberd/conf/cacert.pem
+      - ./server.pem:/home/ejabberd/conf/server.pem
+    ports:
+      - 5222:5222
+      - 127.0.0.1:5443:5443
+    depends_on:
+      - glauth
+  ejabberd_api_exporter:
+    build: ../
+    ports:
+      - 8080:8080
+    depends_on:
+      - ejabberd
